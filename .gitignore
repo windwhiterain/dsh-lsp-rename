@@ -1,0 +1,7 @@
+node_modules/
+.dev-artifacts/
+.worktrees/
+*.log
+*.bak*
+package-lock.json
+.DS_Store

@@ -1,0 +1,35 @@
+{
+  "name": "dsh-lsp-rename",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One pooled language server per workspace for the DeepSeek Harness, serving goToDefinition/findReferences/goToImplementation/hover plus the workspace-editing rename the shipped lsp tool does not expose.",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "lsp",
+    "rename",
+    "rust"
+  ],
+  "license": "MIT",
+  "author": "windwhiterain",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windwhiterain/dsh-lsp-rename.git"
+  },
+  "homepage": "https://github.com/windwhiterain/dsh-lsp-rename#readme",
+  "bugs": {
+    "url": "https://github.com/windwhiterain/dsh-lsp-rename/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib/*.js",
+    "README.md"
+  ]
+}
