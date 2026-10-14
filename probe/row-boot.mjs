@@ -113,27 +113,27 @@ check(Array.isArray(pending?.diffs), 'a pending rename card carries no diff hunk
 // `register` accepts.
 const parameters = JSON.stringify(PARAMETERS)
 console.log('lsp_rename parameters:', parameters)
-if (!/"required":\s*\[/.test(parameters)) throw new Error('parameters carry no top-level required list')
-if (/"required":\s*true/.test(parameters)) throw new Error('parameters carry a per-property required flag')
-if (/"required":\s*true/.test(JSON.stringify(OUTPUT_SCHEMA))) throw new Error('the output schema carries a per-property required flag')
+check(/"required":\s*\[/.test(parameters), 'parameters carry no top-level required list')
+check(!/"required":\s*true/.test(parameters), 'parameters carry a per-property required flag')
+check(!/"required":\s*true/.test(JSON.stringify(OUTPUT_SCHEMA)), 'the output schema carries a per-property required flag')
 for (const optional of ['new_name', 'workspace_root']) {
-  if (PARAMETERS.required.includes(optional)) throw new Error(`${optional} must be optional`)
+  check(!PARAMETERS.required.includes(optional), `${optional} must be optional`)
 }
-if (PARAMETERS.properties.workspace_root?.type !== 'string') throw new Error('workspace_root must be a string')
+check(PARAMETERS.properties.workspace_root?.type === 'string', 'workspace_root must be a string')
 for (const name of ['operation', 'file_path', 'line', 'character']) {
-  if (!PARAMETERS.required.includes(name)) throw new Error(`${name} must be required`)
+  check(PARAMETERS.required.includes(name), `${name} must be required`)
 }
 
 // The wait tool: its parameters and its closed result, in the same dialect.
 const waitParameters = JSON.stringify(WAIT_PARAMETERS)
-if (/"required":\s*true/.test(waitParameters)) throw new Error('wait parameters carry a per-property required flag')
-if (/"required":\s*true/.test(JSON.stringify(WAIT_OUTPUT_SCHEMA))) throw new Error('wait output carries a per-property required flag')
-if (WAIT_PARAMETERS.required.includes('workspace_root')) throw new Error('wait workspace_root must be optional')
+check(!/"required":\s*true/.test(waitParameters), 'wait parameters carry a per-property required flag')
+check(!/"required":\s*true/.test(JSON.stringify(WAIT_OUTPUT_SCHEMA)), 'wait output carries a per-property required flag')
+check(!WAIT_PARAMETERS.required.includes('workspace_root'), 'wait workspace_root must be optional')
 for (const name of ['file_path', 'line', 'character']) {
-  if (!WAIT_PARAMETERS.required.includes(name)) throw new Error(`wait ${name} must be required`)
+  check(WAIT_PARAMETERS.required.includes(name), `wait ${name} must be required`)
 }
 for (const name of ['outcome', 'waitedMs', 'locations', 'workspacePath']) {
-  if (!WAIT_OUTPUT_SCHEMA.required.includes(name)) throw new Error(`wait output ${name} must be required`)
+  check(WAIT_OUTPUT_SCHEMA.required.includes(name), `wait output ${name} must be required`)
 }
 console.log('wait tool schemas:', waitParameters)
 
